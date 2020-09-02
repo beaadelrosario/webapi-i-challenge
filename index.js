@@ -14,6 +14,23 @@ server.get('/', (req, res) => {
   res.send('Hello World');
 });
 
+server.get('/hobbits', (req, res) => {
+    // route handler code here
+    const hobbits = [
+        {
+          id: 1,
+          name: 'Samwise Gamgee',
+        },
+        {
+          id: 2,
+          name: 'Frodo Baggins',
+        },
+      ];
+      // The .status() method of the response object can be used to send any valid HTTP status code.
+      //  We are also chaining the .json() method of the response object to clearly communicate to both the client making the request and to the next developer working with this code, that we intend to send the data in JSON format.
+      res.status(200).json(hobbits);
+  });
+
 // once the server is fully configured we can have it "listen" for connections on a particular "port"
 // the callback function passed as the second argument will run once when the server starts
 server.listen(8000, () => console.log('API running on port 8000'));
