@@ -4,6 +4,21 @@ const express = require("express");
 
 // creates an express application using the express module
 const server = express();
+server.use(express.json());
+
+let hobbits = [
+  {
+    id: 1,
+    name: 'Bilbo Baggins',
+    age: 111,
+  },
+  {
+    id: 2,
+    name: 'Frodo Baggins',
+    age: 33,
+  },
+];
+let nextId = 3;
 
 // configures our server to execute a function for every GET request to "/"
 // the second argument passed to the .get() method is the "Route Handler Function"
@@ -64,12 +79,18 @@ server.get("/contact", (req, res) => {
   res.status(200).send("<h1>Contact Form</h1>");
 });
 
-
-
 // this request handler executes when making a POST request to /hobbits
-server.post("/hobbits", (req, res) => {
-  res.status(201).json({ url: "/hobbits", operation: "POST" });
-});
+// server.post("/hobbits", (req, res) => {
+//   res.status(201).json({ url: "/hobbits", operation: "POST" });
+// });
+server.post('/hobbits', (req, res) => {
+    const hobbit = req.body;
+    hobbit.id = nextId++;
+  
+    hobbits.push(hobbit);
+  
+    res.status(201).json(hobbits);
+  });
 
 // this request handler executes when making a PUT request to /hobbits
 server.put("/hobbits", (req, res) => {
