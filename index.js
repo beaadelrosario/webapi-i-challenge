@@ -4,7 +4,7 @@ const express = require("express");
 
 // creates an express application using the express module
 const server = express();
-server.use(express.json());
+server.use(express.json()); // added after the express app is created
 
 let hobbits = [
   {
@@ -83,6 +83,10 @@ server.get("/contact", (req, res) => {
 // server.post("/hobbits", (req, res) => {
 //   res.status(201).json({ url: "/hobbits", operation: "POST" });
 // });
+
+//To make this work with the hobbits array, we first move it out of the get endpoint into the outer scope. Now we have access to it from all route handlers.
+// Then we define a variable for manual id generation. 
+// When using a database, this is not necessary as the database management system generates ids automatically.
 server.post('/hobbits', (req, res) => {
     const hobbit = req.body;
     hobbit.id = nextId++;
