@@ -31,6 +31,31 @@ server.get('/hobbits', (req, res) => {
       res.status(200).json(hobbits);
   });
 
+  // this request handler executes when making a GET request to /about
+server.get('/about', (req, res) => {
+    res.status(200).send('<h1>About Us</h1>');
+  });
+  
+  // this request handler executes when making a GET request to /contact
+  server.get('/contact', (req, res) => {
+    res.status(200).send('<h1>Contact Form</h1>');
+  });
+
+  // this request handler executes when making a POST request to /hobbits
+server.post('/hobbits', (req, res) => {
+    res.status(201).json({ url: '/hobbits', operation: 'POST' });
+  });
+
+  // this request handler executes when making a PUT request to /hobbits
+server.put('/hobbits', (req, res) => {
+    res.status(200).json({ url: '/hobbits', operation: 'PUT' });
+  });
+
+// this request handler executes when making a DELETE request to /hobbits
+server.delete('/hobbits', (req, res) => {
+    res.status(204);
+  });
+
 // once the server is fully configured we can have it "listen" for connections on a particular "port"
 // the callback function passed as the second argument will run once when the server starts
 server.listen(8000, () => console.log('API running on port 8000'));
