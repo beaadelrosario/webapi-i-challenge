@@ -14,22 +14,45 @@ server.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-server.get("/hobbits", (req, res) => {
-  // route handler code here
-  const hobbits = [
-    {
-      id: 1,
-      name: "Samwise Gamgee",
-    },
-    {
-      id: 2,
-      name: "Frodo Baggins",
-    },
-  ];
-  // The .status() method of the response object can be used to send any valid HTTP status code.
-  //  We are also chaining the .json() method of the response object to clearly communicate to both the client making the request and to the next developer working with this code, that we intend to send the data in JSON format.
-  res.status(200).json(hobbits);
-});
+// server.get("/hobbits", (req, res) => {
+//   // route handler code here
+//   const hobbits = [
+//     {
+//       id: 1,
+//       name: "Samwise Gamgee",
+//     },
+//     {
+//       id: 2,
+//       name: "Frodo Baggins",
+//     },
+//   ];
+//   // The .status() method of the response object can be used to send any valid HTTP status code.
+//   //  We are also chaining the .json() method of the response object to clearly communicate to both the client making the request and to the next developer working with this code, that we intend to send the data in JSON format.
+//   res.status(200).json(hobbits);
+// });
+
+// Visit localhost:8000/hobbits?sortby=name and the list should be sorted by name. Visit localhost:8000/hobbits?sortby=id and the list should now be sorted by id. If no sortby parameter is provided, it should default to sorting by id.
+server.get('/hobbits', (req, res) => {
+    // query string parameters get added to req.query
+    const sortField = req.query.sortby || 'id';
+    const hobbits = [
+      {
+        id: 1,
+        name: 'Samwise Gamgee',
+      },
+      {
+        id: 2,
+        name: 'Frodo Baggins',
+      },
+    ];
+  
+    // apply the sorting
+    const response = hobbits.sort(
+      (a, b) => (a[sortField] < b[sortField] ? -1 : 1)
+    );
+  
+    res.status(200).json(response);
+  });
 
 // this request handler executes when making a GET request to /about
 server.get("/about", (req, res) => {
@@ -40,6 +63,8 @@ server.get("/about", (req, res) => {
 server.get("/contact", (req, res) => {
   res.status(200).send("<h1>Contact Form</h1>");
 });
+
+
 
 // this request handler executes when making a POST request to /hobbits
 server.post("/hobbits", (req, res) => {
